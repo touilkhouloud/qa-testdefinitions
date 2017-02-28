@@ -1,0 +1,25 @@
+metadata:
+    name: kernel-version
+    format: "Lava-Test-Shell Test Definition 1.0"
+    description: "Kernel-version test for AGL builds. The test verfies the
+                  available kernel version."
+    maintainer:
+        - dl9pf@gmx.de
+    os:
+        - openembedded
+    scope:
+        - functional
+    devices:
+        - raspberrypi3-uboot
+        - renesas-porter-uboot
+
+run:
+    steps:
+        - "cd staging/scripts"
+        - "./kernel-version.sh"
+
+parse:
+    pattern: "^(?P<test_case_id>[a-zA-Z0-9_-]+):\\s(?P<result>\\w+)"
+    fixupdict:
+        PASS: pass
+        FAIL: fail

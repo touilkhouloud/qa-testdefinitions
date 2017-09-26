@@ -1,0 +1,13 @@
+metadata:
+    name: skeleton
+    format: "Lava-Test-Shell Test Definition 1.0"
+    description: "A test skeleton"
+    os:
+        - openembedded
+    scope:
+        - functional
+
+run:
+    steps:
+        - "cd doc/"
+        - "./skeleton.sh"

@@ -7,12 +7,15 @@ ALL="${REQUIREDSOCKETS} ${REQUIREDSERVICES}"
 RESULT="unknown"
 
 for i in ${ALL} ; do
+    echo "########## Test for service ${i} being active ##########"
     systemctl is-active ${i} >/dev/null 2>&1
     if [ $? -eq 0 ] ; then
         RESULT="pass"
     else
+        systemctl status ${i} || true
         RESULT="fail"
     fi
+    echo "########## Result for service ${i} : $RESULT ##########"
     lava-test-case ${i} --result ${RESULT}
 done
 

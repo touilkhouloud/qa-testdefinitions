@@ -12,4 +12,4 @@ metadata:
 run:
     steps:
         - "cd common/scripts"
-        - "./service-check-gfx.sh"
+        - "./service-check-nogfx.sh"

@@ -6,6 +6,9 @@ REQUIREDSERVICES="afm-system-daemon.service afm-user-daemon.service connman.serv
 ALL="${REQUIREDSOCKETS} ${REQUIREDSERVICES}"
 RESULT="unknown"
 
+# add delay for services to fully start
+sleep 5
+
 for i in ${ALL} ; do
     echo -e "\n########## Test for service ${i} being active ##########\n"
     systemctl is-active ${i} >/dev/null 2>&1

@@ -1,0 +1,15 @@
+metadata:
+    name: service-ids-check
+    format: "Lava-Test-Shell Test Definition 1.0"
+    description: "Check the ids of services"
+    os:
+        - openembedded
+    scope:
+        - functional
+    maintainer:
+        - jose.bollo@iot.bzh
+
+run:
+    steps:
+        - "cd common/scripts"
+        - "./service-ids-check.sh"

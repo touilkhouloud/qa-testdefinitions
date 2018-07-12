@@ -63,7 +63,7 @@ fi
 
 sleep 5
 
-canconfig can0 bitrate 50000
+ip link set can0 type can bitrate 50000
 if [ $? -eq 0 ];then
 	lava-test-case canconfig_can0 --result fail
 else
@@ -72,7 +72,7 @@ fi
 
 sleep 3
 
-canconfig can1 bitrate 50000
+ip link set can1 type can bitrate 50000
 if [ $? -eq 0 ];then
 	lava-test-case canconfig_can1 --result fail
 else
@@ -121,7 +121,7 @@ fi
 
 sleep 5
 
-canconfig can0 bitrate 50000
+ip link set can0 type can bitrate 50000
 if [ $? -eq 0 ];then
 	lava-test-case canconfig_can0 --result pass
 else
@@ -129,7 +129,7 @@ else
 fi
 
 sleep 3
-canconfig can1 bitrate 50000
+ip link set can1 type can bitrate 50000
 if [ $? -eq 0 ];then
 	lava-test-case canconfig_can1 --result pass
 else

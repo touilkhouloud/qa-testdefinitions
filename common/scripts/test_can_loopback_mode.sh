@@ -10,7 +10,7 @@ if [ ! -e /sys/class/net/can0 ];then
 fi
 sleep 2
 #config the can interfaces
-canconfig can0 bitrate 50000 ctrlmode loopback on
+ip link set can0 type can bitrate 50000 loopback on
 sleep 2
 if [ $? -eq 0 ];then
         lava-test-case canconfig_can0 --result pass
@@ -20,7 +20,7 @@ fi
 sleep 3
 
 #bring up the devices
-canconfig can0 start
+ip link set can0 up
 if [ $? -eq 0 ];then
         lava-test-case start_can0 --result pass
 else
@@ -29,7 +29,7 @@ fi
 sleep 4
 
 #send frames
-cansequence -p can0 &
+cangen can0 &
 x=$?
 sleep 5
 if [ $x -eq 0 ];then
@@ -51,7 +51,7 @@ fi
 rm $file_can
 
 sleep 3
-canconfig can0 stop
+ip link set can0 down
 if [ $? -eq 0 ];then
         lava-test-case stop_can0 --result pass
 else

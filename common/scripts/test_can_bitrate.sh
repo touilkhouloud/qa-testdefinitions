@@ -17,14 +17,14 @@ fi
 
 #This is the first part of the test, that tests if the bitrate inserted belongs to the domain and if
 #this first bitrate afford frames transmission or not
-canconfig can0 stop
+ip link set can0 down
 if [ $? -eq 0 ];then
         lava-test-case stop_can0 --result pass
 else
         lava-test-case stop_can0 --result fail
 fi
 sleep 2
-canconfig can1 stop
+ip link set can1 down
 if [ $? -eq 0 ];then
         lava-test-case stop_can1 --result pass
 else
@@ -36,27 +36,27 @@ sleep 2
 
 found_bitrate=0
 for b in `seq 778 790`;do
-	canconfig can0 bitrate $b
+	ip link set can0 type can bitrate $b
 	x=$?
 	if [ $x -eq 0 ];then
 		lava-test-case can0_bitrate --result pass --measurement $b --units bit/s
 		echo "$b is the first bitrate in the domain"
 		found_bitrate=1
-		canconfig can1 bitrate $b
+		ip link set can1 type can bitrate $b
 		if [ $? -eq 0 ];then
 			lava-test-case can1_bitrate --result pass --measurement $b --units bit/s
 		else
 			lava-test-case can1_bitrate --result fail --measurement $b --units bit/s
 		fi
 		sleep 2
-		canconfig can0 start
+		ip link set can0 up
 		if [ $? -eq 0 ];then
 			lava-test-case start_can0 --result pass
 		else
 			lava-test-case start_can0 --result fail
 		fi
 		sleep 2
-		canconfig can1 start
+		ip link set can1 up
 		if [ $? -eq 0 ];then
 			lava-test-case start_can1 --result pass
 		else
@@ -64,7 +64,7 @@ for b in `seq 778 790`;do
 		fi
 		sleep 2
 		file_can=$(mktemp)
-		cansequence -p can0 &
+		cangen can0 &
 		candump can1 > $file_can &
 		sleep 3
 		if [ -s $file_can ];then
@@ -84,22 +84,22 @@ if [ $found_bitrate -eq 0 ];then
 	sleep 2
 	echo "There is no supportable bitrate in this interval"
 fi
-canconfig can0 stop
-canconfig can1 stop
+ip link set can0 down
+ip link set can1 down
 sleep 2
 #This is the second part of the test, it tests the first bitrate to provide frames transmission
 
-canconfig can0 stop
-canconfig can1 stop
+ip link set can0 down
+ip link set can1 down
 found_bitrate_for_transmisson=0
 for b in `seq 10790 10800`;do
-        canconfig can0 bitrate $b
-        canconfig can1 bitrate $b
-        canconfig can0 start
-        canconfig can1 start
+        ip link set can0 type can bitrate $b
+        ip link set can1 type can bitrate $b
+        ip link set can0 up
+        ip link set can1 up
         sleep 3
         file_can=$(mktemp)
-	cansequence -p can0 &
+	cangen can0 &
 	candump can1 > $file_can &
 	sleep 4
         if [ -s $file_can ];then
@@ -109,8 +109,8 @@ for b in `seq 10790 10800`;do
 		echo "$b is the first supportable bitrate to provide transmission"
 		break
 	fi
-	canconfig can0 stop
-	canconfig can1 stop
+	ip link set can0 down
+	ip link set can1 down
 	rm $file_can
 done
 
@@ -123,49 +123,48 @@ fi
 
 #This is the third part of the test, it tests the last bitrate to provide frames transmission
 
-canconfig can0 stop
-canconfig can1 stop
+ip link set can0 down
+ip link set can1 down
 bitrate_no_transmission=0
 for b in `seq 1909088 1909092`;do
-        canconfig can0 bitrate $b
-        canconfig can1 bitrate $b
-        canconfig can0 start
-        canconfig can1 start
+        ip link set can0 type can bitrate $b
+        ip link set can1 type can bitrate $b
+        ip link set can0 up
+        ip link set can1 up
         sleep 2
         file_can=$(mktemp)
-        cansequence -p can0 &
+        cangen can0 &
         candump can1 > $file_can &
         sleep 3
 	size=$(stat -c %s $file_can)
 	if [ $size -eq 0 ];then
 		bitrate_no_transmission=1
-		B=($b-1)
-		lava-test-case Receive_can1 --result pass --measurement $B --units bit/s
+		lava-test-case Receive_can1 --result pass --measurement $(($b-1)) --units bit/s
 		lava-test-case Receive_can1 --result fail --measurement $b --units bit/s
 		sleep 2
 		echo "This bitrate $b doesn't provide frames transmission"
 		echo "The last bitrate to provide frames transmission is $(($b-1))"
 		break
 	fi
-	canconfig can0 stop
-	canconfig can1 stop
+	ip link set can0 down
+	ip link set can1 down
         rm $file_can
 done
 
 if [ $bitrate_no_transmission -eq 0 ];then
 	lava-test-case Receive_can1 --result pass --measurement $b --units bit/s
 	echo "All bitrates in this interval provide frames transmission"
-	canconfig can0 stop
-	canconfig can1 stop
+	ip link set can0 down
+	ip link set can1 down
 fi
 
 #This is the last part of the test, it tests the last bitrate that belongs to the domain
 sleep 3
-canconfig can0 stop
-canconfig can1 stop
+ip link set can0 down
+ip link set can1 down
 out_of_domain=0
 for b in `seq 5290999 5291000`;do
-	canconfig can0 bitrate $b
+	ip link set can0 type can bitrate $b
 	x=$?
 	sleep 2
 	if [ $x -ne 0 ];then

@@ -8,19 +8,19 @@ metadata:
 
 run:
   steps:
-	- echo "CAN_tests"
-	- lava-test-set start test_can_loopback_mode
-	- ./common/scripts/test_can_loopback_mode.sh
-	- lava-test-set stop
-	- lava-test-set start test_can_send_receive
-	- ./common/scripts/test_can_send_receive.sh
-	- lava-test-set stop
-	- lava-test-set start test_stats
-	- ./common/scripts/test_stats.sh
-	- lava-test-set stop
-	- lava-test-set start test_can_modules
-	- ./common/scripts/test_can_modules.sh
-	- lava-test-set stop
-	- lava-test-set start test_can_bitrate
-	- ./comon/scripts/test_can_bitrate.sh
-	- lava-test-set stop
+        - echo "CAN_tests"
+        - lava-test-set start test_can_loopback_mode
+        - ./common/scripts/test_can_loopback_mode.sh
+        - lava-test-set stop
+        - lava-test-set start test_can_send_receive
+        - ./common/scripts/test_can_send_receive.sh
+        - lava-test-set stop
+        - lava-test-set start test_stats
+        - ./common/scripts/test_stats.sh
+        - lava-test-set stop
+        - lava-test-set start test_can_modules
+        - ./common/scripts/test_can_modules.sh
+        - lava-test-set stop
+        - lava-test-set start test_can_bitrate
+        - ./common/scripts/test_can_bitrate.sh
+        - lava-test-set stop

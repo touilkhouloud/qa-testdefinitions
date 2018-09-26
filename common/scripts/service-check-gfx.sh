@@ -4,13 +4,13 @@ export LANG=C
 export TERM=dumb
 
 REQUIREDSOCKETS="cynara.socket dbus.socket security-manager.socket"
-REQUIREDSERVICES="afm-system-daemon.service connman.service ofono.service weston.service homescreen.service bluetooth.service"
+REQUIREDSERVICES="afm-system-daemon.service connman.service ofono.service weston.service bluetooth.service"
 
 ALL="${REQUIREDSOCKETS} ${REQUIREDSERVICES}"
 RESULT="unknown"
 
 # add delay for services to fully start
-sleep 5
+sleep 10
 
 for i in ${ALL} ; do
     echo -e "\n\n########## Test for service ${i} being active ##########\n\n"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REQUIREDPTESTS="acl attr bluez5 busybox dbus-test"
+REQUIREDPTESTS="acl attr systemd cynara xmlsec1 libxml2 openssl openssh lua smack afb-test agl-service-signal-composer dbus-test"
 
 # Check if ptest packages are installed
 command -v ptest-runner >/dev/null 2>&1

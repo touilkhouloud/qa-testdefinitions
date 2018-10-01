@@ -1,0 +1,21 @@
+metadata:
+    name: dumpjournal
+    format: "Lava-Test-Shell Test Definition 1.0"
+    description: "Dump the systemd journal"
+    maintainer:
+        - jsmoeller@linuxfoundation.org
+    os:
+        - openembedded
+    scope:
+        - functional
+
+run:
+    steps:
+        - "cd common/scripts"
+        - "./dumpjournal.sh"
+
+parse:
+    pattern: "^(?P<test_case_id>[a-zA-Z0-9_-]+):\\s(?P<result>\\w+)"
+    fixupdict:
+        PASS: pass
+        FAIL: fail

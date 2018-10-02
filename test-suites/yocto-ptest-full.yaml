@@ -1,0 +1,7 @@
+metadata:
+  name: metadata-name-yocto-ptest-all
+  format: "Lava-Test-Shell Test Definition 1.0"
+  description: "Wrapper around the Yocto ptests for LAVA"
+run:
+  steps:
+    - ./common/scripts/ptest-lava-wrapper-all.sh

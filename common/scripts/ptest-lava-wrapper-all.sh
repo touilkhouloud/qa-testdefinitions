@@ -7,6 +7,7 @@ if [ $? -ne 0 ] ; then
 else
     # Run ptests for specified packages
         lava-test-set start ptest-full
+
         UNIT_LOG=$(ptest-runner 2> results.log )
         if [ $? -eq 0 ] ; then
             # grep: Get only the ptests results, no log
@@ -24,8 +25,9 @@ else
         else
             lava-test-case ptest-runner ptest-full --result fail
         fi
+
         lava-test-set stop ptest-full
-    done
+
     lava-test-case ptest-runtime --measurement $SECONDS --units seconds --result PASS
 fi
 

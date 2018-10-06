@@ -18,7 +18,7 @@ else
             test_pass=$(echo "$UNIT_LOG" | grep -e 'PASS' | wc -l)
             test_fail=$(echo "$UNIT_LOG" | grep -e 'FAIL' | wc -l)
             lava-test-case passed-commands --result PASS --measurement $test_pass --units pass
-            if ! [ x"0" = x"$test_fail"] ; then
+            if ! [ x"0" = x"$test_fail" ] ; then
               lava-test-case failed-commands --result FAIL --measurement $test_fail --units fail
               echo "$UNIT_LOG" | grep -e 'FAIL'
             fi

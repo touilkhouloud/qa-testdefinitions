@@ -26,7 +26,7 @@ else
             fi
             lava-test-set stop ptest-$unit
         else
-            lava-test-case ptest-runner ${unit} --result fail
+            lava-test-case ptest-runner-${unit} --result fail
         fi
     done
     lava-test-case ptest-runtime --measurement $SECONDS --units seconds --result PASS

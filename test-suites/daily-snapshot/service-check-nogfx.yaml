@@ -1,0 +1,15 @@
+metadata:
+    name: services
+    format: "Lava-Test-Shell Test Definition 1.0"
+    description: "Check all services and sockets are up on the device"
+    maintainer:
+        - lollivier@baylibre.com
+    os:
+        - openembedded
+    scope:
+        - functional
+
+run:
+    steps:
+        - "cd common/scripts"
+        - "./service-check-nogfx.sh"

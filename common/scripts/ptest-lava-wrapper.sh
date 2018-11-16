@@ -1,17 +1,20 @@
 #!/bin/bash
 
-REQUIREDPTESTS="acl attr systemd cynara xmlsec1 libxml2 openssl openssh lua smack afb-test agl-service-signal-composer dbus-test"
-
+REQUIREDPTESTS="acl attr cynara xmlsec1 libxml2 lua smack"
+# NOT: systemd openssl openssh
 # Check if ptest packages are installed
+
+echo "Testing these components: $REQUIREDPTESTS"
+
 command -v ptest-runner >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
     lava-test-case ptest-installed --result SKIP
 else
     # Run ptests for specified packages
     for unit in ${REQUIREDPTESTS}; do
+        lava-test-set start ptest-$unit
         UNIT_LOG=$(ptest-runner ${unit} 2> /dev/null)
         if [ $? -eq 0 ] ; then
-            lava-test-set start ptest-$unit
             # grep: Get only the ptests results, no log
             # sed 1: replace spaces by hyphens
             # sed 2: remove any special character

@@ -10,6 +10,8 @@ command -v ptest-runner >/dev/null 2>&1
 if [ $? -ne 0 ] ; then
     lava-test-case ptest-installed --result SKIP
 else
+    lava-test-case ptest-installed --result PASS
+
     # Run ptests for specified packages
     for unit in ${REQUIREDPTESTS}; do
 	ptest-runner -L ${unit}

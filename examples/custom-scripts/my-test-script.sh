@@ -42,13 +42,13 @@ for i in ${ALL} ; do
     echo -e "\n\n########## Result for service ${i} : $RESULT ##########\n\n"
 done
 
-# echo "------------------------------------------------"
-# echo "All systemd units:"
-# echo "------------------------------------------------"
-# systemctl list-units || true
-# echo "------------------------------------------------"
-# echo "Only the failed systemd units:"
-# echo "------------------------------------------------"
-# ( systemctl list-units | grep failed ) || true
+echo "------------------------------------------------"
+echo "All systemd units:"
+echo "------------------------------------------------"
+systemctl list-units || true
+echo "------------------------------------------------"
+echo "Only the failed systemd units:"
+echo "------------------------------------------------"
+( systemctl list-units | grep failed ) || true
 
 exit 0
